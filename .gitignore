@@ -10,3 +10,6 @@ dist/
 venv/
 /venv/
 /venv library root/
+/instance/
+/instance
+instance/
