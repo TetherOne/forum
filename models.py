@@ -1,10 +1,18 @@
-from sqlalchemy import create_engine, ForeignKey
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship, sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy import ForeignKey
+
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import sessionmaker
+
+
+
 
 engine = create_engine(url='sqlite:///./db.sqlite3')
 session = sessionmaker()
 session.configure(bind=engine)
-
 
 
 
@@ -26,7 +34,6 @@ class User(Base):
         back_populates='user',
         cascade='all'
     )
-
 
 
 
