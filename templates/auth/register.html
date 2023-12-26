@@ -8,24 +8,42 @@
 Страница регистрации
 <button onclick="location.href='/';">Назад</button>
 
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
 
-<form method="POST">
-    <a>
-        Никнейм
-        <input type="text" name="username">
-    </a>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
+
+<form action="/register" method="POST">
+   <a>
+       Никнейм
+       <input type="text" name="username">
+   </a>
+
+   <a>
+       Пароль
+       <input type="text" name="password">
+   </a>
 
     <a>
-        Почта
-        <input type="text" name="email">
-    </a>
+       Почта
+       <input type="text" name="email">
+   </a>
 
-    <a>
-        Пароль
-        <input type="text" name="password">
-    </a>
-    <input type="submit" value="Регистрация">
+   <!-- Добавляем кнопку отправки -->
+   <input type="submit" value="Регистрация">
 </form>
+
 
 
 </body>

@@ -8,8 +8,10 @@
 
 <h1>Всем привет</h1>
 
-<button onclick="location.href='/register';">Регистрация</button>
-<button onclick="location.href='/login';">Войти</button>
+
+<button onclick="window.location.href='{{ url_for('register_page') }}';">Регистрация</button>
+<button onclick="window.location.href='{{ url_for('login_page') }}';">Войти</button>
+
 
 
 </body>
