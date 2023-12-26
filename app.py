@@ -1,11 +1,12 @@
-from flask import Flask, render_template
+from flask import Flask
+from flask import render_template
+from flask import request
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
 from models import Base
-
 
 
 
@@ -25,16 +26,22 @@ def main_page():
 
 
 
-@app.route('/register/', methods=['GET'])
+@app.route('/register', methods=['POST', 'GET'])
 def register_page():
     """
     Функция для отрисовки страницы регистрации сайта
     """
+    # if request.method == 'POST':
+    #     # username = request.form[]
+    #     # email = request.form[]
+
+
+
     return render_template('auth/register.html')
 
 
 
-@app.route('/login/', methods=['GET'])
+@app.route('/login', methods=['POST', 'GET'])
 def login_page():
     """
     Функция для отрисовки страницы входа на сайт
