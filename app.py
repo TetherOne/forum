@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask import render_template
 from flask import request
 
@@ -6,16 +6,12 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
-from models import Base
-
-
+from models import Base, User
 
 app = Flask(__name__)
 
 engine = create_engine(url='sqlite:///./db.sqlite3')
-session = sessionmaker()
-session.configure(bind=engine)
-
+SessionFactory = sessionmaker(bind=engine)
 
 @app.route('/', methods=['GET'])
 def main_page():
@@ -31,9 +27,17 @@ def register_page():
     """
     Функция для отрисовки страницы регистрации сайта
     """
-    # if request.method == 'POST':
-    #     # username = request.form[]
-    #     # email = request.form[]
+
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        new_user = User(username=username, email=email, password=password)
+
+        session = SessionFactory()
+        session.add(new_user)
+        session.commit()
 
 
 

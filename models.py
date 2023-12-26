@@ -1,15 +1,9 @@
-from sqlalchemy import create_engine
 from sqlalchemy import ForeignKey
 
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker
-
-engine = create_engine(url='sqlite:///./db.sqlite3')
-session = sessionmaker()
-session.configure(bind=engine)
 
 
 
@@ -24,8 +18,9 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str]
     email: Mapped[str]
+    password: Mapped[str]
 
-    articles: Mapped[list['articles']] = relationship(
+    articles: Mapped[list['Article']] = relationship(
         back_populates='user',
         cascade='all'
     )
