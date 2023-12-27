@@ -1,8 +1,7 @@
 from flask import Flask, flash, redirect, url_for
 from flask import render_template
 from flask import request
-
-from flask_login import LoginManager
+from flask_login import login_user
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
