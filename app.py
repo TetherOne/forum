@@ -74,21 +74,21 @@ def login_page():
     Функция для отрисовки страницы входа на сайт
 
     """
-    # if request.method == 'POST':
-    #     username = request.form.get('username')
-    #     password = request.form.get('password')
-    #
-    #     if not username or not password:
-    #
-    #         return render_template('auth/login.html', error='Заполните все поля')
-    #
-    #     session = SessionFactory()
-    #
-    #     user = session.query(User).filter_by(username=username, password=password).first()
-    #
-    #     if not user or not check_password_hash(user.password, password):
-    #         flash("Invalid username or password.")
-    #         return redirect(url_for('login_page'))
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if not username or not password:
+            return render_template('auth/login.html', error='Заполните все поля')
+
+        session = SessionFactory()
+
+        user = session.query(User).filter_by(username=username, password=password).first()
+
+        if not user or user.password != password:
+            flash("Неверный никнейм или пароль.")
+            return redirect(url_for('login_page'))
+        return redirect(url_for('main_page'))
 
     return render_template('auth/login.html')
 
