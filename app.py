@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
 
-from models import Base, User
+from models import Base, User, Article
 
 app = Flask(__name__)
 
@@ -145,6 +145,37 @@ def logout_page():
     logout_user()
 
     return redirect(url_for('your_profile_page'))
+
+
+
+@app.route('/your_profile/create_article', methods=['POST', 'GET'])
+def create_article_page():
+    """
+
+    Функция для создания статьи
+
+    """
+    if request.method == 'POST':
+
+        name_of_article = request.form.get('name_of_article')
+        text_of_article = request.form.get('text_of_article')
+
+        if not name_of_article or not text_of_article:
+            return render_template('forum/create_article.html', error='Заполните все поля')
+
+        session = SessionFactory()
+
+        new_article = Article(name_of_article=name_of_article, text_of_article=text_of_article, user_id=current_user.id)
+
+        session.add(new_article)
+
+        flash('Статья опубликована!')
+
+        session.commit()
+
+        return redirect(url_for('your_profile_page'))
+
+    return render_template('forum/create_article.html')
 
 
 

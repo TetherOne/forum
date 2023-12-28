@@ -43,7 +43,6 @@ class Article(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name_of_article: Mapped[str]
-    category: Mapped[str]
     text_of_article: Mapped[str]
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     user: Mapped['User'] = relationship(back_populates='articles')

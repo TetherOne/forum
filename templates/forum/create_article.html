@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Регистрация</title>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+{% if error %}
+  <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+{% with messages = get_flashed_messages() %}
+ {% if messages %}
+  <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+ {% endif %}
+{% endwith %}
+
+<form method="POST" class="container py-5 h-100 d-flex flex-column justify-content-between">
+ <div class="row d-flex justify-content-center align-items-center h-100">
+  <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+      <div class="card-body p-5 text-center">
+
+
+
+         <div class="form-outline mb-4">
+           <label class="form-label" for="name_of_article">название</label>
+           <input type="text" id="name_of_article" class="form-control form-control-lg" name="name_of_article" />
+         </div>
+
+          <div class="form-outline mb-4">
+           <label class="form-label" for="text_of_article">Почта</label>
+           <input type="text" id="text" class="form-control form-control-lg" name="text_of_article" />
+         </div>
+
+          <button onclick="window.location.href='{{ url_for('create_article_page') }}';">Опубликовать</button>
+         <button onclick="location.href='/';" class="btn btn-primary btn-lg btn-block" type="button">Назад</button>
+
+      </div>
+    </div>
+  </div>
+ </div>
+</form>
+
+</body>
+</html>
