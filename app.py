@@ -5,16 +5,22 @@ from flask import url_for
 from flask import render_template
 from flask import request
 
-from flask_login import login_user, logout_user
+from flask_login import login_user
+from flask_login import logout_user
 from flask_login import current_user
 from flask_login import LoginManager
 
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session
 
-from models import Base, User, Article
+
+from models import Base
+from models import User
+from models import Article
+
+
 
 app = Flask(__name__)
 
@@ -61,7 +67,10 @@ def main_page():
     Функция для отрисовки главной страницы сайта
 
     """
-    return render_template('forum/main_page.html', user=current_user)
+    session = SessionFactory()
+    articles = session.query(Article).all()
+
+    return render_template('forum/main_page.html', articles=articles)
 
 
 

@@ -12,7 +12,14 @@
 
 <button onclick="window.location.href='{{ url_for('your_profile_page') }}';">Профиль</button>
 
+{% for article in articles %}
+    <div>Название статьи: {{ article.name_of_article }}</div>
+    <div>Содержание: {{ article.text_of_article }}</div>
+    <p>Автор: {{ article.user.username }}</p>
+    <br>
+<div>
 
+{% endfor %}
 
 
 
