@@ -68,7 +68,7 @@ def main_page():
 
     """
     session = SessionFactory()
-    articles = session.query(Article).all()
+    articles = session.query(Article).all()  #
 
     return render_template('forum/main_page.html', articles=articles)
 
@@ -81,6 +81,14 @@ def your_profile_page():
     Функция для отображения профиля пользователя
 
     """
+    if current_user.is_authenticated:
+
+        session = SessionFactory()
+        current_user_id = current_user.id
+        your_articles = session.query(Article).filter_by(user_id=current_user_id).all()
+
+        return render_template('forum/your_profile.html', articles=your_articles)
+
     return render_template('forum/your_profile.html')
 
 

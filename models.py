@@ -45,5 +45,46 @@ class Article(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name_of_article: Mapped[str]
     text_of_article: Mapped[str]
+    # category_name: Mapped[str]
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     user: Mapped['User'] = relationship(back_populates='articles')
+
+    # categories: Mapped[list['Categories']] = relationship(
+    #     back_populates='',
+    #     cascade='all',
+    # )
+
+
+
+# class Categories(Base):
+#     """
+#
+#     Модель категорий объявлений
+#
+#     """
+#     __tablename__ = 'categories'
+#
+#     id: Mapped[int] = mapped_column(primary_key=True)
+#     name_of_category: Mapped[str]
+#     article_id: Mapped[int] = mapped_column(ForeignKey('articles.id'))
+#     article: Mapped['Article'] = relationship(back_populates='categories')
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
