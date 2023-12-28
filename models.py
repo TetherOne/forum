@@ -1,3 +1,4 @@
+from flask_login import UserMixin
 from sqlalchemy import ForeignKey
 
 from sqlalchemy.orm import DeclarativeBase
@@ -12,9 +13,11 @@ class Base(DeclarativeBase):
 
 
 
-class User(Base):
+class User(Base, UserMixin):
     """
+
     Модель пользователя
+
     """
     __tablename__ = 'users'
 
@@ -32,7 +35,9 @@ class User(Base):
 
 class Article(Base):
     """
+
     Модель статьи
+
     """
     __tablename__ = 'articles'
 

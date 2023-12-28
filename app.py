@@ -1,20 +1,45 @@
-from flask import Flask, flash, redirect, url_for
+from flask import Flask
+from flask import flash
+from flask import redirect
+from flask import url_for
 from flask import render_template
 from flask import request
-from flask_login import login_user
+
+from flask_login import login_user, logout_user
+from flask_login import current_user
+from flask_login import LoginManager
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
-from werkzeug.security import check_password_hash
+
 
 from models import Base, User
 
 app = Flask(__name__)
 
+
+
 engine = create_engine(url='sqlite:///./db.sqlite3')
 app.config['SECRET_KEY'] = 'forum'
 SessionFactory = sessionmaker(bind=engine)
+
+
+
+login_manager = LoginManager(app)
+login_manager.init_app(app)
+
+
+
+@login_manager.user_loader
+def load_user(id):
+    """
+
+    Получение объекта пользователя по id из базы данных
+
+    """
+    session = SessionFactory()
+    return session.query(User).get(int(id))
 
 
 
@@ -28,6 +53,7 @@ def page_not_found(error):
     return render_template('forum/page_not_found_error.html')
 
 
+
 @app.route('/', methods=['GET'])
 def main_page():
     """
@@ -35,7 +61,18 @@ def main_page():
     Функция для отрисовки главной страницы сайта
 
     """
-    return render_template('forum/main_page.html')
+    return render_template('forum/main_page.html', user=current_user)
+
+
+
+@app.route('/your_profile')
+def your_profile_page():
+    """
+
+    Функция для отображения профиля пользователя
+
+    """
+    return render_template('forum/your_profile.html')
 
 
 
@@ -59,7 +96,9 @@ def register_page():
 
         session = SessionFactory()
         session.add(new_user)
+
         flash('Вы успешно зарегистрировались!')
+
         session.commit()
 
     return render_template('auth/register.html')
@@ -87,9 +126,25 @@ def login_page():
         if not user or user.password != password:
             flash("Неверный никнейм или пароль.")
             return redirect(url_for('login_page'))
-        return redirect(url_for('main_page'))
+
+        login_user(user)
+
+        return redirect(url_for('your_profile_page'))
 
     return render_template('auth/login.html')
+
+
+
+@app.route('/logout', methods=['POST', 'GET'])
+def logout_page():
+    """
+
+    Функция для выхода из профиля
+
+    """
+    logout_user()
+
+    return redirect(url_for('your_profile_page'))
 
 
 

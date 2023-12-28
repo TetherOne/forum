@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваш профиль</title>
+</head>
+<body>
+
+<button onclick="window.location.href='{{ url_for('main_page') }}';">Назад</button>
+
+{% if current_user.is_authenticated %}
+   <p>Добро пожаловать, {{ current_user.username }}!</p>
+    <button onclick="window.location.href='{{ url_for('logout_page') }}';">Выйти</button>
+
+    <br>
+
+    Ваши статьи:
+
+
+{% else %}
+   <p>Извините, я вас не знаю.</p>
+    <button onclick="window.location.href='{{ url_for('register_page') }}';">Регистрация</button>
+    <button onclick="window.location.href='{{ url_for('login_page') }}';">Войти</button>
+{% endif %}
+
+</body>
+</html>
