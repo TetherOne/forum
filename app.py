@@ -19,7 +19,10 @@ from sqlalchemy.orm import Session
 from models import Base, Category
 from models import User
 from models import Article
-from views import check_form_fields, save_article_and_category
+from views import check_form_fields
+from views import save_article_and_category
+
+
 
 app = Flask(__name__)
 
