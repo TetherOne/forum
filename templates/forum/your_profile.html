@@ -19,10 +19,15 @@
     {% for article in articles %}
         <div>Название статьи: {{ article.name_of_article }}</div>
         <div>Содержание: {{ article.text_of_article }}</div>
+        {% if article.categories %}
+            <div>Категории:
+                {% for category in article.categories %}
+                    {{ category.name_of_category }}
+                {% endfor %}
+            </div>
+        {% endif %}
         <p>Автор: {{ article.user.username }}</p>
         <br>
-    <div>
-
     {% endfor %}
 
 

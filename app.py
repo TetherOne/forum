@@ -16,11 +16,10 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 
 
-from models import Base
+from models import Base, Category
 from models import User
 from models import Article
-
-
+from views import check_form_fields, save_article_and_category
 
 app = Flask(__name__)
 
@@ -68,9 +67,10 @@ def main_page():
 
     """
     session = SessionFactory()
-    articles = session.query(Article).all()  #
+    articles = session.query(Article).all()
+    categories = session.query(Category).all()
 
-    return render_template('forum/main_page.html', articles=articles)
+    return render_template('forum/main_page.html', articles=articles, categories=categories)
 
 
 
@@ -173,22 +173,17 @@ def create_article_page():
 
     """
     if request.method == 'POST':
-
-        name_of_article = request.form.get('name_of_article')
-        text_of_article = request.form.get('text_of_article')
-
-        if not name_of_article or not text_of_article:
+        if not check_form_fields(request):
             return render_template('forum/create_article.html', error='Заполните все поля')
 
         session = SessionFactory()
 
-        new_article = Article(name_of_article=name_of_article, text_of_article=text_of_article, user_id=current_user.id)
-
-        session.add(new_article)
+        save_article_and_category(session, request.form.get('name_of_article'),
+                                  request.form.get('text_of_article'),
+                                  request.form.get('category'),
+                                  current_user)
 
         flash('Статья опубликована!')
-
-        session.commit()
 
         return redirect(url_for('your_profile_page'))
 

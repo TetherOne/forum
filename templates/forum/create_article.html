@@ -39,6 +39,18 @@
            <input type="text" id="text" class="form-control form-control-lg" name="text_of_article" />
          </div>
 
+         <div class="form-outline mb-4">
+          <label class="form-label" for="category">Категория</label>
+          <select id="category" class="form-control form-control-lg" name="category">
+            <option value="" disabled selected>Выбрать категорию</option>
+            {% for category in ['программирование', 'кулинария', 'спорт'] %}
+              <option value="{{ category }}">{{ category }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+
+
           <button onclick="window.location.href='{{ url_for('create_article_page') }}';">Опубликовать</button>
          <button onclick="location.href='/';" class="btn btn-primary btn-lg btn-block" type="button">Назад</button>
 
