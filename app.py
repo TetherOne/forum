@@ -16,13 +16,15 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 
 
-from models import Base, Category
+from models import Base
 from models import User
 from models import Article
-from views import check_form_fields
-from views import save_article_and_category
 
+from views.create_and_check_article.view_check_form_fields import article_check_form_fields
+from views.create_and_check_article.view_save_article_and_category import save_article_and_category
 
+from views.main_page.view_main_page import upload_articles_and_categories
+from views.register_and_login.view_login_check_fields import login_check_form_fields
 
 app = Flask(__name__)
 
@@ -70,8 +72,7 @@ def main_page():
 
     """
     session = SessionFactory()
-    articles = session.query(Article).all()
-    categories = session.query(Category).all()
+    articles, categories = upload_articles_and_categories(session)
 
     return render_template('forum/main_page.html', articles=articles, categories=categories)
 
@@ -136,7 +137,7 @@ def login_page():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        if not username or not password:
+        if not login_check_form_fields(request):
             return render_template('auth/login.html', error='Заполните все поля')
 
         session = SessionFactory()
@@ -176,7 +177,7 @@ def create_article_page():
 
     """
     if request.method == 'POST':
-        if not check_form_fields(request):
+        if not article_check_form_fields(request):
             return render_template('forum/create_article.html', error='Заполните все поля')
 
         session = SessionFactory()
