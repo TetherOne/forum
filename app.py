@@ -24,7 +24,7 @@ from views.create_and_check_article.view_check_form_fields import article_check_
 from views.create_and_check_article.view_save_article_and_category import save_article_and_category
 
 from views.main_page.view_main_page import upload_articles_and_categories
-from views.register_and_login.view_login_check_fields import login_check_form_fields
+
 
 app = Flask(__name__)
 
@@ -137,7 +137,7 @@ def login_page():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        if not login_check_form_fields(request):
+        if not username or not password:
             return render_template('auth/login.html', error='Заполните все поля')
 
         session = SessionFactory()
