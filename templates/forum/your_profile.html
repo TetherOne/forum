@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Ваш профиль</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    
+
 </head>
 <body>
 
@@ -12,11 +12,11 @@
 
 {% if current_user.is_authenticated %}
    <p>Добро пожаловать, {{ current_user.username }}!</p>
-    <button onclick="window.location.href='{{ url_for('logout_page') }}';">Выйти</button>
+    <button onclick="window.location.href='{{ url_for('logout_page') }}';" type="button" class="btn btn-outline-dark">Выйти</button>
 
     <br>
 
-    <button onclick="window.location.href='{{ url_for('create_article_page') }}';">Написать статью</button>
+    <button onclick="window.location.href='{{ url_for('create_article_page') }}';" type="button" class="btn btn-outline-dark">Написать статью</button>
 
     {% for article in articles %}
         <div>Название статьи: {{ article.name_of_article }}</div>
@@ -35,8 +35,8 @@
 
 {% else %}
    <p>Извините, я вас не знаю.</p>
-    <button onclick="window.location.href='{{ url_for('register_page') }}';">Регистрация</button>
-    <button onclick="window.location.href='{{ url_for('login_page') }}';">Войти</button>
+    <button onclick="window.location.href='{{ url_for('register_page') }}';" type="button" class="btn btn-outline-dark">Регистрация</button>
+    <button onclick="window.location.href='{{ url_for('login_page') }}';" type="button" class="btn btn-outline-dark">Войти</button>
 {% endif %}
 
 </body>
