@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Главная страница</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 
 <h1>Форум</h1>
 
+<div>
 
+    <button onclick="window.location.href='{{ url_for('your_profile_page') }}';" type="button" class="btn btn-outline-dark">Профиль пользователя</button>
 
-<button onclick="window.location.href='{{ url_for('your_profile_page') }}';">Профиль</button>
+</div>
+
 
 {% for article in articles %}
     <div>Название статьи: {{ article.name_of_article }}</div>
