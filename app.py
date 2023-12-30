@@ -24,7 +24,8 @@ from views.create_and_check_article.view_check_form_fields import article_check_
 from views.create_and_check_article.view_save_article_and_category import save_article_and_category
 
 from views.main_page.view_main_page import upload_articles_and_categories
-
+from views.register_and_login.get_login_fields import get_username_password
+from views.register_and_login.get_register_fields import get_username_email_password
 
 app = Flask(__name__)
 
@@ -105,9 +106,7 @@ def register_page():
 
     """
     if request.method == 'POST':
-        username = request.form.get('username')
-        email = request.form.get('email')
-        password = request.form.get('password')
+        username, email, password = get_username_email_password(request)
 
         if not username or not email or not password:
 
@@ -134,8 +133,7 @@ def login_page():
 
     """
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        username, password = get_username_password(request)
 
         if not username or not password:
             return render_template('auth/login.html', error='Заполните все поля')
