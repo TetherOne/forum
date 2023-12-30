@@ -21,11 +21,16 @@ from models import User
 from models import Article
 
 from views.create_and_check_article.view_check_form_fields import article_check_form_fields
+
 from views.create_and_check_article.view_save_article_and_category import save_article_and_category
 
 from views.main_page.view_main_page import upload_articles_and_categories
+
 from views.register_and_login.get_login_fields import get_username_password
+
 from views.register_and_login.get_register_fields import get_username_email_password
+
+
 
 app = Flask(__name__)
 
@@ -50,6 +55,7 @@ def load_user(id):
 
     """
     session = SessionFactory()
+
     return session.query(User).get(int(id))
 
 
