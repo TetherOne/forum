@@ -26,6 +26,7 @@ class User(Base, UserMixin):
     username: Mapped[str]
     email: Mapped[str]
     password: Mapped[str]
+    photo: Mapped[str] = mapped_column(server_default='')
 
     articles: Mapped[list['Article']] = relationship(
         back_populates='user',
