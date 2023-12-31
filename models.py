@@ -1,27 +1,34 @@
 import datetime
+
 from typing import Annotated
 
-import pytz
 from flask_login import UserMixin
 
-from sqlalchemy import ForeignKey, text, func, Column, DateTime
+from sqlalchemy import ForeignKey
+from sqlalchemy import Column
+from sqlalchemy import DateTime
 
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
+from views.models_view.utc_now import utcnow
+
+
 
 int_pk = Annotated[int, mapped_column(primary_key=True)]
 
 
 
-def utcnow():
-    return datetime.datetime.now(pytz.timezone('Etc/GMT-5'))
-
-
-
 class Base(DeclarativeBase):
+    """
+
+    Родительский класс,
+    имеет атрибуты id (primary_key=True),
+    created_at (default=utcnow)
+
+    """
     id: Mapped[int_pk]
     created_at: Mapped[datetime] = Column(DateTime, default=utcnow)
 
@@ -30,7 +37,13 @@ class Base(DeclarativeBase):
 class User(Base, UserMixin):
     """
 
-    Модель пользователя
+    Модель пользователя:
+
+    id: int
+    username: str
+    email: str
+    password: str
+    created_at: datetime
 
     """
     __tablename__ = 'users'
@@ -51,7 +64,13 @@ class User(Base, UserMixin):
 class Article(Base):
     """
 
-    Модель статьи
+    Модель статьи:
+
+    id: int, primary_key
+    name_of_article: str
+    text_of_article: str
+    user_id: int, Foreignkey
+    created_at: datetime
 
     """
     __tablename__ = 'articles'
@@ -73,7 +92,12 @@ class Article(Base):
 class Category(Base):
     """
 
-    Модель категорий объявлений
+    Модель категорий объявлений:
+
+    id: int, primary_key
+    name_of_category: str
+    article_id: int, Foreignkey
+    created_at: datetime
 
     """
     __tablename__ = 'categories'
