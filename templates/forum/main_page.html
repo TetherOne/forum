@@ -20,7 +20,7 @@
     <div>Название статьи: {{ article.name_of_article }}</div>
     <div>Содержание: {{ article.text_of_article }}</div>
     {% if article.categories %}
-        <div>Категории:
+        <div>Категория:
             {% for category in article.categories %}
                 {{ category.name_of_category }}
             {% endfor %}
