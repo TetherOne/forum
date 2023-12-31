@@ -1,6 +1,7 @@
 import datetime
 from typing import Annotated
 
+import pytz
 from flask_login import UserMixin
 
 from sqlalchemy import ForeignKey, text, func, Column, DateTime
@@ -15,8 +16,14 @@ int_pk = Annotated[int, mapped_column(primary_key=True)]
 
 
 
+def utcnow():
+    return datetime.datetime.now(pytz.timezone('Etc/GMT-5'))
+
+
+
 class Base(DeclarativeBase):
     id: Mapped[int_pk]
+    created_at: Mapped[datetime] = Column(DateTime, default=utcnow)
 
 
 
