@@ -26,7 +26,10 @@
             {% endfor %}
         </div>
     {% endif %}
-    <p>Автор: {{ article.user.username }}</p>
+    <div>Автор: {{ article.user.username }}</div>
+    <div>Дата публикации: {{ article.created_at.strftime('%d %B, %Y, %H:%M') }}</div>
+
+
     <br>
 {% endfor %}
 
