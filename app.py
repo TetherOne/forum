@@ -15,7 +15,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 
-
 from models import Base
 from models import User
 from models import Article
@@ -196,6 +195,22 @@ def create_article_page():
         return redirect(url_for('your_profile_page'))
 
     return render_template('forum/create_article.html')
+
+
+
+@app.route('/your_profile/delete_article/<int:id>', methods=['POST', 'GET'])
+def delete_article_page(id):
+    """
+
+    Функция для удаления статьи
+
+    """
+    session = SessionFactory()
+    article_to_delete = session.query(Article).filter_by(id=id).first()
+    session.delete(article_to_delete)
+    session.commit()
+
+    return redirect(url_for('your_profile_page'))
 
 
 
