@@ -1,4 +1,3 @@
-from babel.dates import format_datetime
 from flask import Flask
 from flask import flash
 from flask import redirect
@@ -16,7 +15,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 
-from models import Base, Category
+from models import Base
 from models import User
 from models import Article
 
@@ -29,7 +28,8 @@ from views.main_page.view_main_page import upload_articles_and_categories
 from views.register_and_login.get_login_fields import get_username_password
 
 from views.register_and_login.get_register_fields import get_username_email_password
-# from views.update_article.get_fields_to_update import get_fields_to_upload_article
+
+
 
 app = Flask(__name__)
 
@@ -211,29 +211,6 @@ def delete_article_page(id):
 
     return redirect(url_for('your_profile_page'))
 
-
-
-# @app.route('/your_profile/update_article/<int:id>', methods=['POST', 'GET'])
-# def update_article_page(id):
-#     """
-#
-#     Функция для редактирования статьи
-#
-#     """
-#     session = SessionFactory()
-#     article = session.query(Article).filter_by(id=id).first()
-#     category = session.query(Category).filter_by(id=article.id).first()
-#
-#     if request.method == 'POST':
-#
-#         get_fields_to_upload_article(request, article, category)
-#
-#         session.commit()
-#
-#         flash('Статья обновлена')
-#         return redirect(url_for('your_profile_page'))
-#
-#     return render_template('forum/update_article.html', article=article, category=category, categories=session.query(Category).all())
 
 
 def main():
