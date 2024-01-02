@@ -108,7 +108,8 @@ def your_profile_page():
 def register_page():
     """
 
-    Функция для отрисовки страницы регистрации сайта
+    Функция для отрисовки страницы регистрации сайта,
+    используется шаблон auth/register.html
 
     """
     if request.method == 'POST':
@@ -131,7 +132,8 @@ def register_page():
 def login_page():
     """
 
-    Функция для отрисовки страницы входа на сайт
+    Функция для отрисовки страницы входа на сайт,
+    используется шаблон auth/login.html
 
     """
     if request.method == 'POST':
@@ -155,7 +157,8 @@ def login_page():
 def logout_page():
     """
 
-    Функция для выхода из профиля
+    Функция для выхода из профиля,
+    используется шаблон forum/your_profile_page.html
 
     """
     logout_user()
@@ -168,7 +171,8 @@ def logout_page():
 def create_article_page():
     """
 
-    Функция для создания статьи
+    Функция для создания статьи,
+    используется шаблон forum/create_article.html
 
     """
     if request.method == 'POST':
@@ -187,7 +191,8 @@ def create_article_page():
 def delete_article_page(id):
     """
 
-    Функция для удаления статьи
+    Функция для удаления статьи,
+    используется шаблон forum/your_profile_page.html
 
     """
     session = SessionFactory()
@@ -201,6 +206,12 @@ def delete_article_page(id):
 
 @app.route('/your_profile/update_article/<int:id>', methods=['POST', 'GET'])
 def update_article_page(id):
+    """
+
+    Функция для обновления статьи,
+    используется шаблон forum/update_article.html
+
+    """
     session = SessionFactory()
     article = session.query(Article).filter_by(id=id).first()
     if request.method == 'POST':
