@@ -77,9 +77,9 @@ def main_page():
 
     """
     session = SessionFactory()
-    articles, categories = upload_articles_and_categories(session)
+    articles = upload_articles_and_categories(session)
 
-    return render_template('forum/main_page.html', articles=articles, categories=categories)
+    return render_template('forum/main_page.html', articles=articles)
 
 
 
@@ -210,6 +210,7 @@ def delete_article_page(id):
     session.commit()
 
     return redirect(url_for('your_profile_page'))
+
 
 
 @app.route('/your_profile/update_article/<int:id>', methods=['POST', 'GET'])

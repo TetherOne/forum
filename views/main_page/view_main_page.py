@@ -1,5 +1,4 @@
 from models import Article
-from models import Category
 
 
 
@@ -10,6 +9,5 @@ def upload_articles_and_categories(session):
 
     """
     articles = session.query(Article).all()
-    categories = session.query(Category).all()
 
-    return articles, categories
+    return articles
