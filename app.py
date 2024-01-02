@@ -212,6 +212,19 @@ def delete_article_page(id):
     return redirect(url_for('your_profile_page'))
 
 
+@app.route('/your_profile/update_article/<int:id>', methods=['POST', 'GET'])
+def update_article_page(id):
+    session = SessionFactory()
+    article = session.query(Article).filter_by(id=id).first()
+    if request.method == 'POST':
+        article.name_of_article = request.form['name_of_article']
+        article.text_of_article = request.form['text_of_article']
+        article.category = request.form['category']
+        session.commit()
+        return redirect(url_for('your_profile_page'))
+    else:
+        return render_template('forum/update_article.html', article=article)
+
 
 def main():
     Base.metadata.create_all(bind=engine)
