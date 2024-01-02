@@ -31,6 +31,8 @@ from views.register_and_login.login_view import login
 
 from views.register_and_login.register_view import register_user
 
+from views.update_article.get_fields_and_update_article_view import get_fields_and_update_article
+
 
 
 app = Flask(__name__)
@@ -51,7 +53,8 @@ login_manager.init_app(app)
 def load_user(id):
     """
 
-    Получение объекта пользователя по id из базы данных
+    Получение объекта пользователя по id из базы данных,
+    "вспомогательная функция"
 
     """
     session = SessionFactory()
@@ -64,7 +67,8 @@ def load_user(id):
 def page_not_found(error):
     """
 
-    Функция для обработки ошибки, при указании неправильного пути
+    Функция для обработки ошибки, при указании неправильного пути,
+    используется шаблон forum/page_not_found_error.html
 
     """
     return render_template('forum/page_not_found_error.html')
@@ -75,7 +79,8 @@ def page_not_found(error):
 def main_page():
     """
 
-    Функция для отрисовки главной страницы сайта
+    Функция для отрисовки главной страницы сайта,
+    используется шаблон forum/main_page.html
 
     """
     session = SessionFactory()
@@ -89,7 +94,8 @@ def main_page():
 def your_profile_page():
     """
 
-    Функция для отображения профиля пользователя
+    Функция для отображения профиля пользователя,
+    используется шаблон forum/your_profile.html
 
     """
     if current_user.is_authenticated:
@@ -158,7 +164,7 @@ def logout_page():
     """
 
     Функция для выхода из профиля,
-    используется шаблон forum/your_profile_page.html
+    используется шаблон forum/your_profile.html
 
     """
     logout_user()
@@ -214,14 +220,17 @@ def update_article_page(id):
     """
     session = SessionFactory()
     article = session.query(Article).filter_by(id=id).first()
+
     if request.method == 'POST':
-        article.name_of_article = request.form['name_of_article']
-        article.text_of_article = request.form['text_of_article']
-        article.category = request.form['category']
-        session.commit()
+
+        get_fields_and_update_article(session, request, article)
+
         return redirect(url_for('your_profile_page'))
+
     else:
+
         return render_template('forum/update_article.html', article=article)
+
 
 
 def main():
