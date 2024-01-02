@@ -1,11 +1,9 @@
 from flask import Flask
-from flask import flash
 from flask import redirect
 from flask import url_for
 from flask import render_template
 from flask import request
 
-from flask_login import login_user
 from flask_login import logout_user
 from flask_login import current_user
 from flask_login import LoginManager
@@ -28,7 +26,12 @@ from views.main_page.main_page_view import upload_articles_and_categories
 from views.register_and_login.get_login_fields_view import get_username_password
 
 from views.register_and_login.get_register_fields_view import get_username_email_password
-from views.register_and_login.register_user_view import register_user
+
+from views.register_and_login.login_view import login
+
+from views.register_and_login.register_view import register_user
+
+
 
 app = Flask(__name__)
 
@@ -117,6 +120,7 @@ def register_page():
             return render_template('auth/register.html', error='Заполните все поля')
 
         session = SessionFactory()
+
         register_user(session, username, email, password)
 
     return render_template('auth/register.html')
@@ -134,17 +138,12 @@ def login_page():
         username, password = get_username_password(request)
 
         if not username or not password:
+
             return render_template('auth/login.html', error='Заполните все поля')
 
         session = SessionFactory()
 
-        user = session.query(User).filter_by(username=username, password=password).first()
-
-        if not user or user.password != password:
-            flash("Неверный никнейм или пароль.")
-            return redirect(url_for('login_page'))
-
-        login_user(user)
+        login(session, username, password)
 
         return redirect(url_for('your_profile_page'))
 
@@ -178,14 +177,7 @@ def create_article_page():
 
         session = SessionFactory()
 
-        save_article_and_category(session, request.form.get('name_of_article'),
-                                  request.form.get('text_of_article'),
-                                  request.form.get('category'),
-                                  current_user)
-
-        flash('Статья опубликована!')
-
-        return redirect(url_for('your_profile_page'))
+        save_article_and_category(session, request, current_user)
 
     return render_template('forum/create_article.html')
 
