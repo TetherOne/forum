@@ -19,17 +19,16 @@ from models import Base
 from models import User
 from models import Article
 
-from views.create_and_check_article.view_check_form_fields import article_check_form_fields
+from views.create_and_check_article.check_form_fields_view import article_check_form_fields
 
-from views.create_and_check_article.view_save_article_and_category import save_article_and_category
+from views.create_and_check_article.save_article_and_category_view import save_article_and_category
 
-from views.main_page.view_main_page import upload_articles_and_categories
+from views.main_page.main_page_view import upload_articles_and_categories
 
-from views.register_and_login.get_login_fields import get_username_password
+from views.register_and_login.get_login_fields_view import get_username_password
 
-from views.register_and_login.get_register_fields import get_username_email_password
-
-
+from views.register_and_login.get_register_fields_view import get_username_email_password
+from views.register_and_login.register_user_view import register_user
 
 app = Flask(__name__)
 
@@ -110,20 +109,15 @@ def register_page():
 
     """
     if request.method == 'POST':
+
         username, email, password = get_username_email_password(request)
 
         if not username or not email or not password:
 
             return render_template('auth/register.html', error='Заполните все поля')
 
-        new_user = User(username=username, email=email, password=password)
-
         session = SessionFactory()
-        session.add(new_user)
-
-        flash('Вы успешно зарегистрировались!')
-
-        session.commit()
+        register_user(session, username, email, password)
 
     return render_template('auth/register.html')
 

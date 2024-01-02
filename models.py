@@ -13,7 +13,7 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
-from views.models_view.utc_now import utcnow
+from views.models_view.utc_now_view import utcnow
 
 
 
