@@ -8,7 +8,7 @@ from flask_login import logout_user
 from flask_login import current_user
 from flask_login import LoginManager
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
@@ -102,7 +102,7 @@ def your_profile_page():
 
         session = SessionFactory()
         current_user_id = current_user.id
-        your_articles = session.query(Article).filter_by(user_id=current_user_id).all()
+        your_articles = session.query(Article).filter_by(user_id=current_user_id).order_by(desc(Article.created_at)).all()
 
         return render_template('forum/your_profile.html', articles=your_articles)
 
