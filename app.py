@@ -1,6 +1,3 @@
-import os
-from pathlib import Path
-
 from flask import Flask
 from flask import redirect
 from flask import url_for
@@ -11,11 +8,10 @@ from flask_login import logout_user
 from flask_login import current_user
 from flask_login import LoginManager
 
-from sqlalchemy import create_engine, desc, update
+from sqlalchemy import create_engine, desc
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
-from werkzeug.utils import secure_filename
 
 from models import Base
 from models import User
@@ -24,6 +20,8 @@ from models import Article
 from views.create_and_check_article.check_form_fields_view import article_check_form_fields
 
 from views.create_and_check_article.save_article_and_category_view import save_article_and_category
+
+from views.delete_article.delete_article_view import delete_article
 
 from views.main_page.main_page_view import upload_articles_and_categories
 
@@ -36,6 +34,8 @@ from views.register_and_login.login_view import login
 from views.register_and_login.register_view import register_user
 
 from views.update_article.get_fields_and_update_article_view import get_fields_and_update_article
+
+from views.upload_avatar.upload_avatar_view import upload_avatar
 
 
 
@@ -128,36 +128,19 @@ def your_profile_page():
     return render_template('forum/your_profile.html')
 
 
+
 @app.route('/upload_avatar', methods=['POST'])
-def upload_avatar():
-    if current_user.is_authenticated:
-        if 'avatar' in request.files:
-            avatar_file = request.files['avatar']
-            print("Получен файл аватара:", avatar_file.filename)
-            if avatar_file.filename != '':
-                # Создание папки 'avatars', если её нет
-                avatars_folder = os.path.join(app.static_folder, 'avatars')
-                os.makedirs(avatars_folder, exist_ok=True)
+def upload_avatar_page():
+    """
 
-                # Сохранение файла аватара в папку 'avatars'
-                avatar_filename = secure_filename(avatar_file.filename)
-                avatar_path = os.path.join(avatars_folder, avatar_filename)
-                avatar_file.save(avatar_path)
+    Функция для загрузки аватарки пользователя,
+    используется шаблон forum/your_profile.html
 
-                session = SessionFactory()
-                current_user.avatar = f"avatars/{avatar_filename}"
+    """
+    session = SessionFactory()
 
+    upload_avatar(request, session)
 
-                # Обновление записи пользователя в базе данных
-                stmt = (
-                    update(User).
-                    where(User.id == current_user.id).
-                    values(avatar=current_user.avatar)
-                )
-                session.execute(stmt)
-                session.commit()
-
-    # Перенаправление обратно на страницу профиля пользователя
     return redirect(url_for('your_profile_page'))
 
 
@@ -254,9 +237,8 @@ def delete_article_page(id):
 
     """
     session = SessionFactory()
-    article = session.query(Article).filter_by(id=id).first()
-    session.delete(article)
-    session.commit()
+
+    delete_article(session, id)
 
     return redirect(url_for('your_profile_page'))
 
