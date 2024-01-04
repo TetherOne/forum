@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 from flask import Flask
 from flask import redirect
 from flask import url_for
@@ -12,6 +15,7 @@ from sqlalchemy import create_engine, desc
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
+from werkzeug.utils import secure_filename
 
 from models import Base
 from models import User
@@ -122,6 +126,31 @@ def your_profile_page():
         return render_template('forum/your_profile.html', articles=your_articles)
 
     return render_template('forum/your_profile.html')
+
+
+@app.route('/upload_avatar', methods=['POST'])
+def upload_avatar():
+    if current_user.is_authenticated:
+        if 'avatar' in request.files:
+            avatar_file = request.files['avatar']
+            if avatar_file.filename != '':
+                # Создание папки 'avatars', если её нет
+                avatars_folder = os.path.join(app.static_folder, 'avatars')
+                os.makedirs(avatars_folder, exist_ok=True)
+
+                # Сохранение файла аватара в папку 'avatars'
+                avatar_filename = secure_filename(avatar_file.filename)
+                avatar_path = os.path.join(avatars_folder, avatar_filename)
+                avatar_file.save(avatar_path)
+
+                session = SessionFactory()
+
+                # Обновление текущего пользователя в базе данных
+                current_user.avatar = Path(f"avatars/{avatar_filename}")
+                session.commit()
+
+    # Перенаправление обратно на страницу профиля пользователя
+    return redirect(url_for('your_profile_page'))
 
 
 

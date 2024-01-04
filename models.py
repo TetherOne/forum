@@ -4,7 +4,7 @@ from typing import Annotated, Optional
 
 from flask_login import UserMixin
 
-from sqlalchemy import ForeignKey, String
+from sqlalchemy import ForeignKey, String, column
 from sqlalchemy import Column
 from sqlalchemy import DateTime
 
@@ -56,6 +56,7 @@ class User(Base, UserMixin):
     bio: Mapped[Optional[str]]
     github: Mapped[Optional[str]]
     telegram: Mapped[Optional[str]]
+    avatar: Mapped[Optional[str]] = Column(String)
     email: Mapped[str]
     password: Mapped[str]
 
@@ -85,6 +86,7 @@ class Article(Base):
     name_of_article: Mapped[str]
     category: Mapped[str]
     text_of_article: Mapped[str]
+    image: Mapped[Optional[str]] = Column(String)
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     user: Mapped['User'] = relationship(back_populates='articles')
 
