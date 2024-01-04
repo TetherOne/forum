@@ -71,7 +71,7 @@ def page_not_found(error):
     используется шаблон forum/page_not_found_error.html
 
     """
-    return render_template('forum/page_not_found_error.html')
+    return render_template('forum/page_not_found_error.html', user=current_user)
 
 
 

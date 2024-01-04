@@ -1,6 +1,6 @@
 import datetime
 
-from typing import Annotated
+from typing import Annotated, Optional
 
 from flask_login import UserMixin
 
@@ -53,9 +53,9 @@ class User(Base, UserMixin):
 
 
     username: Mapped[str]
-    bio: Mapped[str]
-    github: Mapped[str]
-    telegram: Mapped[str]
+    bio: Mapped[Optional[str]]
+    github: Mapped[Optional[str]]
+    telegram: Mapped[Optional[str]]
     email: Mapped[str]
     password: Mapped[str]
 
