@@ -11,7 +11,7 @@ from flask_login import logout_user
 from flask_login import current_user
 from flask_login import LoginManager
 
-from sqlalchemy import create_engine, desc
+from sqlalchemy import create_engine, desc, update
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
@@ -133,6 +133,7 @@ def upload_avatar():
     if current_user.is_authenticated:
         if 'avatar' in request.files:
             avatar_file = request.files['avatar']
+            print("Получен файл аватара:", avatar_file.filename)
             if avatar_file.filename != '':
                 # Создание папки 'avatars', если её нет
                 avatars_folder = os.path.join(app.static_folder, 'avatars')
@@ -144,9 +145,16 @@ def upload_avatar():
                 avatar_file.save(avatar_path)
 
                 session = SessionFactory()
+                current_user.avatar = f"avatars/{avatar_filename}"
 
-                # Обновление текущего пользователя в базе данных
-                current_user.avatar = Path(f"avatars/{avatar_filename}")
+
+                # Обновление записи пользователя в базе данных
+                stmt = (
+                    update(User).
+                    where(User.id == current_user.id).
+                    values(avatar=current_user.avatar)
+                )
+                session.execute(stmt)
                 session.commit()
 
     # Перенаправление обратно на страницу профиля пользователя
