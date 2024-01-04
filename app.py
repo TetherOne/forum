@@ -89,6 +89,7 @@ def main_page():
     return render_template('forum/main_page.html', articles=articles)
 
 
+
 @app.route('/<int:id>/profile', methods=['GET'])
 def user_profile_page(id):
     """
@@ -101,6 +102,7 @@ def user_profile_page(id):
     user_articles = session.query(Article).filter_by(user_id=id).order_by(desc(Article.created_at)).all()
 
     return render_template('forum/user_profile.html', user_articles=user_articles, user=user)
+
 
 
 @app.route('/your_profile')

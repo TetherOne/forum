@@ -4,7 +4,7 @@ from typing import Annotated
 
 from flask_login import UserMixin
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, String
 from sqlalchemy import Column
 from sqlalchemy import DateTime
 
@@ -41,6 +41,9 @@ class User(Base, UserMixin):
 
     id: int
     username: str
+    bio: str
+    github: str
+    telegram: str
     email: str
     password: str
     created_at: datetime
@@ -50,6 +53,9 @@ class User(Base, UserMixin):
 
 
     username: Mapped[str]
+    bio: Mapped[str]
+    github: Mapped[str]
+    telegram: Mapped[str]
     email: Mapped[str]
     password: Mapped[str]
 
