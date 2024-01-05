@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, abort, jsonify
 from flask import redirect
 from flask import url_for
 from flask import render_template
@@ -92,6 +92,18 @@ def main_page():
     articles = upload_articles_and_categories(session)
 
     return render_template('forum/main_page.html', articles=articles)
+
+
+
+@app.route('/article-details/<int:article_id>', methods=['GET'])
+def article_details_page(article_id):
+    session = SessionFactory()
+    articles = session.query(Article).filter_by(id=article_id).all()  # Получаем список статей
+    if articles:
+        article = articles[0]  # Выбираем первую статью из списка
+        return render_template('forum/article_details.html', article=article)
+    else:
+        abort(404)
 
 
 

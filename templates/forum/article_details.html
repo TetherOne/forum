@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Статья</title>
+</head>
+<body>
+
+
+Статья
+
+<div>Название статьи: {{ article.name_of_article }}</div>
+
+<div>Категория: {{ article.category }}</div>
+<div>Содержание: {{ article.text_of_article }}</div>
+<div>Автор: <a href="{{ url_for('user_profile_page', id=article.user.id) }}">{{ article.user.username }}</a></div>
+<div>Дата публикации: {{ article.created_at.strftime('%d %B, %Y, %H:%M') }}</div>
+<div>
+
+
+</body>
+</html>
