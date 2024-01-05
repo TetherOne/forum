@@ -9,13 +9,16 @@
 <button onclick="window.location.href='{{ url_for('main_page') }}';" type="button" class="btn btn-outline-dark">Назад</button>
 <p>Имя пользователя: {{ user.username }} </p>
     {% for article in user_articles %}
-        <div>Название статьи: {{ article.name_of_article }}</div>
-        <duv>Категория: {{ article.category }}</duv>
-
-        <div>Содержание: {{ article.text_of_article }}</div>
-
-        <div>Дата публикации: {{ article.created_at.strftime('%d %B, %Y, %H:%M') }}</div>
-
-        <br>
+       {% if user.avatar %}
+           <img src="{{ url_for('static', filename=user.avatar) }}" alt="Avatar" style="max-width: 100px; max-height: 100px;">
+       {% else %}
+           <p>Нет аватарки</p>
+       {% endif %}
+       <div>Название статьи: {{ article.name_of_article }}</div>
+       <duv>Категория: {{ article.category }}</duv>
+       <div>Содержание: {{ article.text_of_article }}</div>
+       <div>Дата публикации: {{ article.created_at.strftime('%d %B, %Y, %H:%M') }}</div>
+       <br>
     {% endfor %}
+
 

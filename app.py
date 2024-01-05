@@ -42,6 +42,7 @@ from views.upload_avatar.upload_avatar_view import upload_avatar
 app = Flask(__name__)
 
 
+
 engine = create_engine(url='sqlite:///./db.sqlite3')
 app.config['SECRET_KEY'] = 'forum'
 SessionFactory = sessionmaker(bind=engine)

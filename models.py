@@ -53,9 +53,9 @@ class User(Base, UserMixin):
 
 
     username: Mapped[str]
-    bio: Mapped[Optional[str]]
-    github: Mapped[Optional[str]]
-    telegram: Mapped[Optional[str]]
+    bio: Mapped[Optional[str]] = Column(String)
+    github: Mapped[Optional[str]] = Column(String)
+    telegram: Mapped[Optional[str]] = Column(String)
     avatar: Mapped[Optional[str]] = Column(String)
     email: Mapped[str]
     password: Mapped[str]
@@ -86,12 +86,33 @@ class Article(Base):
     name_of_article: Mapped[str]
     category: Mapped[str]
     text_of_article: Mapped[str]
-    image: Mapped[Optional[str]] = Column(String)
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     user: Mapped['User'] = relationship(back_populates='articles')
 
+    images: Mapped[list['Image']] = relationship(
+        back_populates='article',
+        cascade='all'
+    )
 
 
+
+class Image(Base):
+    """
+
+    Модель изображения:
+
+    id: int, primary_key
+    image: str
+    article_id: int, ForeignKey
+
+    """
+    __tablename__ = 'images'
+
+
+    image: Mapped[str]
+
+    article_id: Mapped[int] = mapped_column(ForeignKey('articles.id'))
+    article: Mapped['Article'] = relationship('Article', back_populates='images')
 
 
 
