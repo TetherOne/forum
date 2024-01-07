@@ -34,8 +34,9 @@ from views.register_and_login.login_view import login
 from views.register_and_login.register_view import register_user
 
 from views.update_article.get_fields_and_update_article_view import get_fields_and_update_article
+from views.upload_and_delete_avatar.delete_avatar_view import delete_avatar
 
-from views.upload_avatar.upload_avatar_view import upload_avatar
+from views.upload_and_delete_avatar.upload_avatar_view import upload_avatar
 
 
 
@@ -153,6 +154,22 @@ def upload_avatar_page():
     session = SessionFactory()
 
     upload_avatar(request, session)
+
+    return redirect(url_for('your_profile_page'))
+
+
+
+@app.route('/delete_avatar', methods=['POST'])
+def delete_avatar_page():
+    """
+
+    Функция для удаления аватарки пользователя,
+    используется шаблон forum/your_profile.html
+
+    """
+    session = SessionFactory()
+
+    delete_avatar(request, session)
 
     return redirect(url_for('your_profile_page'))
 

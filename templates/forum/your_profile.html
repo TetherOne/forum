@@ -17,7 +17,9 @@
     <br>
     {% if current_user.avatar %}
         <img src="{{ url_for('static', filename=current_user.avatar) }}" alt="Avatar" style="max-width: 100px; max-height: 100px;">
-
+        <form action="{{ url_for('delete_avatar_page') }}" method="post">
+            <button type="submit" class="btn btn-outline-danger">Удалить аватар</button>
+        </form>
     {% endif %}
     <form action="{{ url_for('upload_avatar_page') }}" method="post" enctype="multipart/form-data">
         <label for="avatar">Загрузить аватар:</label>
