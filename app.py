@@ -24,6 +24,7 @@ from views.create_and_check_article.save_article_and_category_view import save_a
 from views.delete_article.delete_article_view import delete_article
 
 from views.main_page.main_page_view import upload_articles_and_categories
+from views.main_page.upload_articles_by_category_view import upload_articles_by_category
 
 from views.register_and_login.get_login_fields_view import get_username_password
 
@@ -34,6 +35,7 @@ from views.register_and_login.login_view import login
 from views.register_and_login.register_view import register_user
 
 from views.update_article.get_fields_and_update_article_view import get_fields_and_update_article
+
 from views.upload_and_delete_avatar.delete_avatar_view import delete_avatar
 
 from views.upload_and_delete_avatar.upload_avatar_view import upload_avatar
@@ -81,23 +83,42 @@ def page_not_found(error):
 
 
 
+
 @app.route('/', methods=['GET'])
 def main_page():
     """
 
-    Функция для отрисовки главной страницы сайта,
+    Функция для отрисовки главной страницы,
+    используется функция фильтрации статей по категориям,
     используется шаблон forum/main_page.html
 
     """
     session = SessionFactory()
-    articles = upload_articles_and_categories(session)
+    category_filter = request.args.get('category', None)
 
-    return render_template('forum/main_page.html', articles=articles)
+    if category_filter:
+
+        articles = upload_articles_by_category(session, category_filter)
+    else:
+
+        articles = upload_articles_and_categories(session)
+
+    categories = session.query(Article.category).distinct().all()
+
+    return render_template('forum/main_page.html',
+                           articles=articles, categories=categories,
+                           selected_category=category_filter)
 
 
 
 @app.route('/article-details/<int:article_id>', methods=['GET'])
 def article_details_page(article_id):
+    """
+
+    Функция для отрисовки деталей статьи,
+    используется шаблон forum/article_details.html
+
+    """
     session = SessionFactory()
     articles = session.query(Article).filter_by(id=article_id).all()  # Получаем список статей
     if articles:
