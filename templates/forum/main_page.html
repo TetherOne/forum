@@ -8,6 +8,11 @@
 <body>
 
 <h1>Форум</h1>
+<form action="/" method="get">
+    <label for="search">Поиск по названию статьи:</label>
+    <input type="text" id="search" class="form-control" name="search" placeholder="Введите название статьи" value="{{ search_query }}">
+    <input type="submit" value="Искать">
+</form>
 
 <form action="/" method="get">
     <label for="category">Выберите категорию:</label>

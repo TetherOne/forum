@@ -22,6 +22,7 @@ from views.create_and_check_article.check_form_fields_view import article_check_
 from views.create_and_check_article.save_article_and_category_view import save_article_and_category
 
 from views.delete_article.delete_article_view import delete_article
+from views.main_page.article_search_view import upload_articles_by_search
 
 from views.main_page.main_page_view import upload_articles_and_categories
 from views.main_page.upload_articles_by_category_view import upload_articles_by_category
@@ -95,19 +96,19 @@ def main_page():
     """
     session = SessionFactory()
     category_filter = request.args.get('category', None)
+    search_query = request.args.get('search', None)
 
     if category_filter:
-
         articles = upload_articles_by_category(session, category_filter)
+    elif search_query:
+        articles = upload_articles_by_search(session, search_query)
     else:
-
         articles = upload_articles_and_categories(session)
 
     categories = session.query(Article.category).distinct().all()
 
-    return render_template('forum/main_page.html',
-                           articles=articles, categories=categories,
-                           selected_category=category_filter)
+    return render_template('forum/main_page.html', articles=articles, categories=categories,
+                           selected_category=category_filter, search_query=search_query)
 
 
 
