@@ -47,7 +47,7 @@ app = Flask(__name__)
 
 
 
-engine = create_engine(url='sqlite:///./db.sqlite3')
+engine = create_engine('postgresql://postgres:qwerty@localhost:5432/forum')
 app.config['SECRET_KEY'] = 'forum'
 SessionFactory = sessionmaker(bind=engine)
 
