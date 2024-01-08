@@ -83,11 +83,6 @@ class Article(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     user: Mapped['User'] = relationship(back_populates='articles')
 
-    images: Mapped[list['Image']] = relationship(
-        back_populates='article',
-        cascade='all'
-    )
-
 
 
 

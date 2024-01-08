@@ -1,4 +1,4 @@
-from flask import Flask, abort, jsonify
+from flask import Flask, abort
 from flask import redirect
 from flask import url_for
 from flask import render_template
