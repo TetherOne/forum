@@ -38,9 +38,6 @@
 
 {% for article in articles %}
     <div>Название статьи: {{ article.name_of_article }}</div>
-{#    {% for image in article.images %}#}
-{#       <img src="{{ url_for('static', filename=image.image) }}" alt="Image">#}
-{#   {% endfor %}#}
     <duv>Категория: {{ article.category }}</duv>
     <div>Содержание: {{ article.text_of_article }}</div>
     <div>Автор: <a href="{{ url_for('user_profile_page', id=article.user.id) }}">{{ article.user.username }}</a></div>
