@@ -53,9 +53,6 @@ class User(Base, UserMixin):
 
 
     username: Mapped[str]
-    bio: Mapped[Optional[str]] = Column(String)
-    github: Mapped[Optional[str]] = Column(String)
-    telegram: Mapped[Optional[str]] = Column(String)
     avatar: Mapped[Optional[str]] = Column(String)
     email: Mapped[str]
     password: Mapped[str]
