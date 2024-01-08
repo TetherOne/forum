@@ -4,7 +4,7 @@ from typing import Annotated, Optional
 
 from flask_login import UserMixin
 
-from sqlalchemy import ForeignKey, String, column
+from sqlalchemy import ForeignKey, String
 from sqlalchemy import Column
 from sqlalchemy import DateTime
 
@@ -41,9 +41,6 @@ class User(Base, UserMixin):
 
     id: int
     username: str
-    bio: str
-    github: str
-    telegram: str
     email: str
     password: str
     created_at: datetime
@@ -90,26 +87,6 @@ class Article(Base):
         back_populates='article',
         cascade='all'
     )
-
-
-
-class Image(Base):
-    """
-
-    Модель изображения:
-
-    id: int, primary_key
-    image: str
-    article_id: int, ForeignKey
-
-    """
-    __tablename__ = 'images'
-
-
-    image: Mapped[str]
-
-    article_id: Mapped[int] = mapped_column(ForeignKey('articles.id'))
-    article: Mapped['Article'] = relationship('Article', back_populates='images')
 
 
 
