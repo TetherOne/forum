@@ -99,16 +99,23 @@ def main_page():
     search_query = request.args.get('search', None)
 
     if category_filter:
+
         articles = upload_articles_by_category(session, category_filter)
+
     elif search_query:
+
         articles = upload_articles_by_search(session, search_query)
     else:
+
         articles = upload_articles_and_categories(session)
 
     categories = session.query(Article.category).distinct().all()
 
-    return render_template('forum/main_page.html', articles=articles, categories=categories,
-                           selected_category=category_filter, search_query=search_query)
+    return render_template('forum/main_page.html',
+                           articles=articles,
+                           categories=categories,
+                           selected_category=category_filter,
+                           search_query=search_query)
 
 
 
