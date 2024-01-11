@@ -128,11 +128,14 @@ def article_details_page(article_id):
 
     """
     session = SessionFactory()
-    articles = session.query(Article).filter_by(id=article_id).all()  # Получаем список статей
+    articles = session.query(Article).filter_by(id=article_id).all()
     if articles:
-        article = articles[0]  # Выбираем первую статью из списка
+
+        article = articles[0]
+
         return render_template('forum/article_details.html', article=article)
     else:
+
         abort(404)
 
 

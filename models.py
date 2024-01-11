@@ -1,6 +1,7 @@
 import datetime
 
-from typing import Annotated, Optional
+from typing import Annotated
+from typing import Optional
 
 from flask_login import UserMixin
 
@@ -39,11 +40,12 @@ class User(Base, UserMixin):
 
     Модель пользователя:
 
-    id: int
+    id: int, primary_ky=True
     username: str
     email: str
     password: str
-    created_at: datetime
+    created_at: datetime, utcnow=True
+    avatar: str
 
     """
     __tablename__ = 'users'
@@ -67,11 +69,11 @@ class Article(Base):
 
     Модель статьи:
 
-    id: int, primary_key
+    id: int, primary_key=Tru
     name_of_article: str
     text_of_article: str
-    user_id: int, Foreignkey
-    created_at: datetime
+    user_id: int, Foreignkey ('users.id')
+    created_at: datetime, utcnow=True
 
     """
     __tablename__ = 'articles'
