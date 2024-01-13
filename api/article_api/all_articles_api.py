@@ -10,7 +10,8 @@ class ArticleAllResource(Resource):
     """
 
     GET: получение статьи по article_id,
-    POST: создание статьи
+    POST: создание статьи,
+    DELETE: удаление статьи
 
     """
 
