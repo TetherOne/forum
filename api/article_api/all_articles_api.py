@@ -9,37 +9,32 @@ from settings import SessionFactory
 class ArticleAllResource(Resource):
     """
 
-    GET: получение списка всех статей,
+    GET: получение статьи по article_id,
     POST: создание статьи
 
     """
+
     @classmethod
-    def get(cls):
+    def get(cls, article_id: int):
 
         session = SessionFactory()
-        articles = session.query(Article).order_by(desc(Article.created_at)).all()
+        article = session.query(Article).filter_by(id=article_id).first()
         session.close()
 
-        if articles:
+        if article:
 
-            article_list = []
-
-            for article in articles:
-
-                article_list.append({
-                    'id': article.id,
-                    'name_of_article': article.name_of_article,
-                    'text_of_article': article.text_of_article,
-                    'category': article.category,
-                    'created_at': article.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-                    'user_id': article.user_id
-                })
-
-            return {'articles': article_list}
+            return {
+                'id': article.id,
+                'name_of_article': article.name_of_article,
+                'text_of_article': article.text_of_article,
+                'category': article.category,
+                'created_at': article.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'user_id': article.user_id}
 
         else:
 
-            return {'message': 'No articles found'}, 404
+            return {'message': 'Article not found'}, 404
+
 
 
 

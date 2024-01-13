@@ -13,51 +13,43 @@ from settings import SessionFactory
 class UserAllResource(Resource):
     """
 
-    API для получения всех пользователей,
+    API для получения пользователя по user_id,
     API для создания пользователя
 
     """
 
     @classmethod
-    def get(cls):
+    def get(cls, user_id: int):
 
         session = SessionFactory()
-        users = session.query(User).order_by(desc(User.created_at)).all()
+        user = session.query(User).filter_by(id=user_id).first()
         session.close()
 
-        if users:
+        if user:
 
-            users_list = []
+            if user.created_at:
 
-            for user in users:
-
-                if user.created_at:
-
-                    users_list.append({
-                        'id': user.id,
+                return {'id': user.id,
                         'username': user.username,
                         'email': user.email,
                         'avatar': user.avatar,
                         'password': user.password,
                         'created_at': user.created_at.strftime('%Y-%m-%d %H:%M:%S')
-                    })
+                        }
 
-                else:
+            else:
 
-                    users_list.append({
-                        'id': user.id,
+                return {'id': user.id,
                         'username': user.username,
                         'email': user.email,
                         'avatar': user.avatar,
                         'password': user.password,
                         'created_at': None
-                    })
-
-            return {'users': users_list}
+                        }
 
         else:
 
-            return {'message': 'No articles found'}, 404
+            return {'message': 'User not found'}, 404
 
 
 
