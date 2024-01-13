@@ -1,5 +1,6 @@
 from flask import request
-from flask_restful import Resource, reqparse
+
+from flask_restful import Resource
 
 from sqlalchemy import desc
 
@@ -8,8 +9,18 @@ from models import User
 from settings import SessionFactory
 
 
+
 class UserAllResource(Resource):
-    def get(self):
+    """
+
+    API для получения всех пользователей,
+    API для создания пользователя
+
+    """
+
+    @classmethod
+    def get(cls):
+
         session = SessionFactory()
         users = session.query(User).order_by(desc(User.created_at)).all()
         session.close()
@@ -21,6 +32,7 @@ class UserAllResource(Resource):
             for user in users:
 
                 if user.created_at:
+
                     users_list.append({
                         'id': user.id,
                         'username': user.username,
@@ -31,6 +43,7 @@ class UserAllResource(Resource):
                     })
 
                 else:
+
                     users_list.append({
                         'id': user.id,
                         'username': user.username,
@@ -39,12 +52,17 @@ class UserAllResource(Resource):
                         'password': user.password,
                         'created_at': None
                     })
+
             return {'users': users_list}
+
         else:
+
             return {'message': 'No articles found'}, 404
 
 
-    def post(self):
+
+    @classmethod
+    def post(cls):
 
         data = request.json
 

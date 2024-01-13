@@ -6,12 +6,20 @@ from settings import SessionFactory
 
 
 class ArticleResource(Resource):
-    def get(self, id):
+    """
+
+    GET: получение статьи по id
+
+    """
+    @classmethod
+    def get(cls, id: int):
+
         session = SessionFactory()
         article = session.query(Article).filter_by(id=id).first()
         session.close()
 
         if article:
+
             return {
                     'id': article.id,
                     'name_of_article': article.name_of_article,
@@ -19,5 +27,7 @@ class ArticleResource(Resource):
                     'category': article.category,
                     'created_at': article.created_at.strftime('%Y-%m-%d %H:%M:%S'),
                     'user_id': article.user_id}
+
         else:
+
             return {'message': 'Article not found'}, 404
