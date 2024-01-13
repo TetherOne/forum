@@ -99,5 +99,3 @@ class Article(Base):
 
 
 
-
-

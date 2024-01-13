@@ -8,48 +8,45 @@ from flask_login import logout_user
 from flask_login import current_user
 from flask_login import LoginManager
 
-from sqlalchemy import create_engine, desc
+from sqlalchemy import desc
 
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
+
+from api.get_article.get_article_api import ArticleResource
+from api.get_user.get_user_api import UserResource
 
 from models import Base
 from models import User
 from models import Article
 
-from views.create_and_check_article.check_form_fields_view import article_check_form_fields
+from settings import SessionFactory
+from settings import engine
+from settings import app
+from settings import api
 
+from views.create_and_check_article.check_form_fields_view import article_check_form_fields
 from views.create_and_check_article.save_article_and_category_view import save_article_and_category
 
 from views.delete_article.delete_article_view import delete_article
-from views.main_page.article_search_view import upload_articles_by_search
 
+from views.main_page.article_search_view import upload_articles_by_search
 from views.main_page.main_page_view import upload_articles_and_categories
 from views.main_page.upload_articles_by_category_view import upload_articles_by_category
 
 from views.register_and_login.get_login_fields_view import get_username_password
-
 from views.register_and_login.get_register_fields_view import get_username_email_password
-
 from views.register_and_login.login_view import login
-
 from views.register_and_login.register_view import register_user
 
 from views.update_article.get_fields_and_update_article_view import get_fields_and_update_article
 
 from views.upload_and_delete_avatar.delete_avatar_view import delete_avatar
-
 from views.upload_and_delete_avatar.upload_avatar_view import upload_avatar
 
 
 
-app = Flask(__name__)
-
-
-
-engine = create_engine('postgresql://postgres:qwerty@localhost:5432/forum')
-app.config['SECRET_KEY'] = 'forum'
-SessionFactory = sessionmaker(bind=engine)
+api.add_resource(UserResource, '/api/users/<int:user_id>')
+api.add_resource(ArticleResource, '/api/article/<int:id>')
 
 
 
@@ -105,6 +102,7 @@ def main_page():
     elif search_query:
 
         articles = upload_articles_by_search(session, search_query)
+
     else:
 
         articles = upload_articles_and_categories(session)
