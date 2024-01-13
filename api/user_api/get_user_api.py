@@ -1,5 +1,5 @@
 from flask import request
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 
 from models import User
 from settings import SessionFactory
@@ -12,11 +12,9 @@ class UserResource(Resource):
         session.close()
 
         if user:
-            return {'username': user.username, 'email': user.email, 'avatar': user.avatar}
+            return {'username': user.username,
+                    'email': user.email,
+                    'avatar': user.avatar}
         else:
             return {'message': 'User not found'}, 404
 
-    def post(self):
-        session = SessionFactory()
-
-        data = request.json

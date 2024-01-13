@@ -1,4 +1,5 @@
-from flask_restful import Resource
+from flask import request
+from flask_restful import Resource, reqparse
 
 from sqlalchemy import desc
 
@@ -41,3 +42,17 @@ class UserAllResource(Resource):
             return {'users': users_list}
         else:
             return {'message': 'No articles found'}, 404
+
+
+    def post(self):
+
+        data = request.json
+
+        new_user = User(**data)
+
+        session = SessionFactory()
+        session.add(new_user)
+        session.commit()
+        session.close()
+
+        return {'message': 'User created successfully'}, 201
