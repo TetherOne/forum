@@ -1,3 +1,4 @@
+from flask import request
 from flask_restful import Resource
 from sqlalchemy import desc
 
@@ -9,7 +10,8 @@ from settings import SessionFactory
 class ArticleResource(Resource):
     """
 
-    GET: получение статей по id
+    GET: получение статей по id,
+    POST: создание статьи
 
     """
 
@@ -39,3 +41,23 @@ class ArticleResource(Resource):
         else:
 
             return {'message': 'No articles found'}, 404
+
+
+
+    @classmethod
+    def post(cls):
+        data = request.json
+
+        if isinstance(data, list):
+            articles = [Article(**article_data) for article_data in data]
+
+            session = SessionFactory()
+            session.add_all(articles)
+            session.commit()
+            session.close()
+
+            return {'message': 'Articles created successfully'}, 201
+
+        else:
+
+            return {'message': 'Invalid data format. Expected a list of articles.'}, 400

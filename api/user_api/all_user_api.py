@@ -14,7 +14,6 @@ class UserAllResource(Resource):
     """
 
     API для получения пользователя по user_id,
-    API для создания пользователя
 
     """
 
@@ -53,16 +52,3 @@ class UserAllResource(Resource):
 
 
 
-    @classmethod
-    def post(cls):
-
-        data = request.json
-
-        new_user = User(**data)
-
-        session = SessionFactory()
-        session.add(new_user)
-        session.commit()
-        session.close()
-
-        return {'message': 'User created successfully'}, 201

@@ -1,3 +1,4 @@
+from flask import request
 from flask_restful import Resource
 from sqlalchemy import desc
 
@@ -9,7 +10,8 @@ from settings import SessionFactory
 class UserResource(Resource):
     """
 
-    API для получения всех пользователей
+    API для получения всех пользователей,
+    API для регистрации пользователей
 
     """
 
@@ -53,3 +55,22 @@ class UserResource(Resource):
         else:
 
             return {'message': 'No articles found'}, 404
+
+    @classmethod
+    def post(cls):
+
+        data = request.json
+
+        if isinstance(data, list):
+            users = [User(**user_data) for user_data in data]
+
+            session = SessionFactory()
+            session.add_all(users)
+            session.commit()
+            session.close()
+
+            return {'message': 'Users registered successfully'}, 201
+
+        else:
+
+            return {'message': 'Invalid data format. Expected a list of users.'}, 400

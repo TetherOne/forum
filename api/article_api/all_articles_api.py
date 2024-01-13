@@ -10,11 +10,9 @@ class ArticleAllResource(Resource):
     """
 
     GET: получение статьи по article_id,
-    POST: создание статьи,
     DELETE: удаление статьи
 
     """
-
     @classmethod
     def get(cls, article_id: int):
 
@@ -35,23 +33,6 @@ class ArticleAllResource(Resource):
         else:
 
             return {'message': 'Article not found'}, 404
-
-
-
-
-    @classmethod
-    def post(cls):
-
-        data = request.json
-
-        new_article = Article(**data)
-
-        session = SessionFactory()
-        session.add(new_article)
-        session.commit()
-        session.close()
-
-        return {'message': 'Article created successfully'}, 201
 
 
 
