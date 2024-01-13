@@ -1,3 +1,4 @@
+from flask import request
 from flask_restful import Resource
 from sqlalchemy import desc
 
@@ -25,3 +26,17 @@ class ArticleAllResource(Resource):
             return {'articles': article_list}
         else:
             return {'message': 'No articles found'}, 404
+
+
+    def post(self):
+
+        data = request.json
+
+        new_article = Article(**data)
+
+        session = SessionFactory()
+        session.add(new_article)
+        session.commit()
+        session.close()
+
+        return {'message': 'Article created successfully'}, 201
