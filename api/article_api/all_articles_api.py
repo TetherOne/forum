@@ -51,3 +51,25 @@ class ArticleAllResource(Resource):
         session.close()
 
         return {'message': 'Article created successfully'}, 201
+
+
+
+    @classmethod
+    def delete(cls, article_id: int):
+
+        session = SessionFactory()
+        article = session.query(Article).filter_by(id=article_id).first()
+
+        if article:
+
+            session.delete(article)
+            session.commit()
+            session.close()
+
+            return {'message': 'Article deleted successfully'}
+
+        else:
+
+            session.close()
+
+            return {'message': 'Article not found'}, 405
