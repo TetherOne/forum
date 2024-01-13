@@ -51,7 +51,7 @@ from views.upload_and_delete_avatar.upload_avatar_view import upload_avatar
 api.add_resource(UserAllResource, '/api/users')
 api.add_resource(UserResource, '/api/users/<int:user_id>')
 api.add_resource(ArticleAllResource, '/api/articles')
-api.add_resource(ArticleResource, '/api/articles/<int:id>')
+api.add_resource(ArticleResource, '/api/articles/<int:article_id>')
 
 
 

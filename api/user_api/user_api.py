@@ -12,7 +12,7 @@ class UserResource(Resource):
 
     """
     @classmethod
-    def get(cls, user_id):
+    def get(cls, user_id: int):
 
         session = SessionFactory()
         user = session.query(User).filter_by(id=user_id).first()
@@ -20,9 +20,26 @@ class UserResource(Resource):
 
         if user:
 
-            return {'username': user.username,
-                    'email': user.email,
-                    'avatar': user.avatar}
+            if user.created_at:
+
+                return {'id': user.id,
+                        'username': user.username,
+                        'email': user.email,
+                        'avatar': user.avatar,
+                        'password': user.password,
+                        'created_at': user.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                        }
+
+            else:
+
+                return {'id': user.id,
+                        'username': user.username,
+                        'email': user.email,
+                        'avatar': user.avatar,
+                        'password': user.password,
+                        'created_at': None
+                        }
+
         else:
 
             return {'message': 'User not found'}, 404

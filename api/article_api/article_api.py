@@ -12,10 +12,10 @@ class ArticleResource(Resource):
 
     """
     @classmethod
-    def get(cls, id: int):
+    def get(cls, article_id: int):
 
         session = SessionFactory()
-        article = session.query(Article).filter_by(id=id).first()
+        article = session.query(Article).filter_by(id=article_id).first()
         session.close()
 
         if article:
