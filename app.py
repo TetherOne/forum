@@ -1,4 +1,4 @@
-from flask import Flask, abort
+from flask import abort
 from flask import redirect
 from flask import url_for
 from flask import render_template
@@ -12,10 +12,11 @@ from sqlalchemy import desc
 
 from sqlalchemy.orm import Session
 
-from api.get_article.get_all_articles_api import ArticleAllResource
-from api.get_article.get_article_api import ArticleResource
-from api.get_user.get_all_user_api import UserAllResource
-from api.get_user.get_user_api import UserResource
+from api.article_api.get_all_articles_api import ArticleAllResource
+from api.article_api.get_article_api import ArticleResource
+
+from api.user_api.get_all_user_api import UserAllResource
+from api.user_api.get_user_api import UserResource
 
 from models import Base
 from models import User
@@ -46,11 +47,11 @@ from views.upload_and_delete_avatar.delete_avatar_view import delete_avatar
 from views.upload_and_delete_avatar.upload_avatar_view import upload_avatar
 
 
+
 api.add_resource(UserAllResource, '/api/users')
 api.add_resource(UserResource, '/api/users/<int:user_id>')
 api.add_resource(ArticleAllResource, '/api/articles')
 api.add_resource(ArticleResource, '/api/articles/<int:id>')
-
 
 
 
