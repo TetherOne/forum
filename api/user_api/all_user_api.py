@@ -10,13 +10,22 @@ from settings import SessionFactory
 
 
 
-class UserAllResource(Resource):
+class UserIDResource(Resource):
     """
 
-    API для получения пользователя по user_id,
+    API for getting user by user_id.
 
+    ---
+    parameters:
+      - name: user_id
+        in: path
+        type: integer
+        required: true
+        description: The ID of the user to retrieve.
+    responses:
+      404:
+        description: User not found
     """
-
     @classmethod
     def get(cls, user_id: int):
 

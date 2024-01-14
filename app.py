@@ -12,11 +12,11 @@ from sqlalchemy import desc
 
 from sqlalchemy.orm import Session
 
-from api.article_api.all_articles_api import ArticleAllResource
-from api.article_api.article_api import ArticleResource
+from api.article_api.all_articles_api import ArticleIDResource
+from api.article_api.article_api import ArticleAllResource
 
-from api.user_api.all_user_api import UserAllResource
-from api.user_api.user_api import UserResource
+from api.user_api.all_user_api import UserIDResource
+from api.user_api.user_api import UserAllResource
 
 from models import Base
 from models import User
@@ -48,10 +48,10 @@ from views.upload_and_delete_avatar.upload_avatar_view import upload_avatar
 
 
 
-api.add_resource(UserResource, '/api/users')
-api.add_resource(UserAllResource, '/api/users/<int:user_id>')
-api.add_resource(ArticleResource, '/api/articles')
-api.add_resource(ArticleAllResource, '/api/articles/<int:article_id>')
+api.add_resource(UserAllResource, '/api/users')
+api.add_resource(UserIDResource, '/api/users/<int:user_id>')
+api.add_resource(ArticleAllResource, '/api/articles')
+api.add_resource(ArticleIDResource, '/api/articles/<int:article_id>')
 
 
 

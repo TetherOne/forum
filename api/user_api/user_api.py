@@ -1,20 +1,28 @@
 from flask import request
 from flask_restful import Resource
-from sqlalchemy import desc
+from sqlalchemy import desc, create_engine
+from sqlalchemy.orm import sessionmaker
 
 from models import User
-
 from settings import SessionFactory
 
 
-class UserResource(Resource):
+class UserAllResource(Resource):
     """
 
-    API для получения всех пользователей,
-    API для регистрации пользователей
+    API for getting all users.
 
+    ---
+    parameters:
+      - name: user_id
+        in: path
+        type: integer
+        required: true
+        description: The ID of the user to retrieve.
+    responses:
+      404:
+        description: User not found
     """
-
     @classmethod
     def get(cls):
 

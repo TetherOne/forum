@@ -7,12 +7,21 @@ from models import Article
 from settings import SessionFactory
 
 
-class ArticleResource(Resource):
+class ArticleAllResource(Resource):
     """
 
-    GET: получение статей по id,
-    POST: создание статьи
+    API for getting all articles.
 
+    ---
+    parameters:
+      - name: article_id
+        in: path
+        type: integer
+        required: true
+        description: The ID of the article to retrieve.
+    responses:
+      404:
+        description: Article not found
     """
 
     @classmethod

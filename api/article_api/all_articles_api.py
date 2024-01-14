@@ -6,13 +6,23 @@ from models import Article
 from settings import SessionFactory
 
 
-class ArticleAllResource(Resource):
+class ArticleIDResource(Resource):
     """
 
-    GET: получение статьи по article_id,
-    DELETE: удаление статьи
+    API for getting article by article_id.
 
+    ---
+    parameters:
+      - name: article_id
+        in: path
+        type: integer
+        required: true
+        description: The ID of the article to retrieve.
+    responses:
+      404:
+        description: Article not found
     """
+
     @classmethod
     def get(cls, article_id: int):
 
