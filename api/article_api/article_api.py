@@ -10,20 +10,10 @@ from settings import SessionFactory
 class ArticleAllResource(Resource):
     """
 
-    API for getting all articles.
+    GET: для получения всех статей,
+    POST: для создания статей
 
-    ---
-    parameters:
-      - name: article_id
-        in: path
-        type: integer
-        required: true
-        description: The ID of the article to retrieve.
-    responses:
-      404:
-        description: Article not found
     """
-
     @classmethod
     def get(cls):
 

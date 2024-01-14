@@ -64,6 +64,8 @@ class UserAllResource(Resource):
 
             return {'message': 'No articles found'}, 404
 
+
+
     @classmethod
     def post(cls):
 

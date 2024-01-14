@@ -9,20 +9,10 @@ from settings import SessionFactory
 class ArticleIDResource(Resource):
     """
 
-    API for getting article by article_id.
+    GET: для получения статьи по article_id,
+    DELETE: для удаления статьи
 
-    ---
-    parameters:
-      - name: article_id
-        in: path
-        type: integer
-        required: true
-        description: The ID of the article to retrieve.
-    responses:
-      404:
-        description: Article not found
     """
-
     @classmethod
     def get(cls, article_id: int):
 

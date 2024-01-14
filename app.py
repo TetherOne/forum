@@ -12,10 +12,10 @@ from sqlalchemy import desc
 
 from sqlalchemy.orm import Session
 
-from api.article_api.all_articles_api import ArticleIDResource
+from api.article_api.id_articles_api import ArticleIDResource
 from api.article_api.article_api import ArticleAllResource
 
-from api.user_api.all_user_api import UserIDResource
+from api.user_api.id_user_api import UserIDResource
 from api.user_api.user_api import UserAllResource
 
 from models import Base
