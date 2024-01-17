@@ -22,7 +22,7 @@ from models import Base
 from models import User
 from models import Article
 
-from settings import SessionFactory
+from settings import SessionFactory, cache
 from settings import engine
 from settings import app
 from settings import api
@@ -143,21 +143,7 @@ def article_details_page(article_id):
 
 
 
-@app.route('/<int:id>/profile', methods=['GET'])
-def user_profile_page(id):
-    """
-
-    Функция для просмотра профиля чужого пользователя
-
-    """
-    session = SessionFactory()
-    user = session.query(User).filter_by(id=id).first()
-    user_articles = session.query(Article).filter_by(user_id=id).order_by(desc(Article.created_at)).all()
-
-    return render_template('forum/user_profile.html', user_articles=user_articles, user=user)
-
-
-
+@cache.cached(timeout=600, key_prefix='profile_page')
 @app.route('/your_profile')
 def your_profile_page():
     """
@@ -170,7 +156,16 @@ def your_profile_page():
 
         session = SessionFactory()
         current_user_id = current_user.id
-        your_articles = session.query(Article).filter_by(user_id=current_user_id).order_by(desc(Article.created_at)).all()
+        cached_articles = cache.get(f'articles_{current_user_id}')
+
+        if cached_articles is not None:
+
+            your_articles = cached_articles
+
+        else:
+
+            your_articles = session.query(Article).filter_by(user_id=current_user_id).order_by(desc(Article.created_at)).all()
+            cache.set(f'articles_{current_user_id}', your_articles, timeout=600)
 
         return render_template('forum/your_profile.html', articles=your_articles)
 
@@ -229,6 +224,9 @@ def register_page():
         session = SessionFactory()
 
         register_user(session, username, email, password)
+        login(session, username, password)
+
+        return redirect(url_for('your_profile_page'))
 
     return render_template('auth/register.html')
 

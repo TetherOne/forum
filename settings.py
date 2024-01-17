@@ -1,6 +1,8 @@
 from flasgger import Swagger
 from flask import Flask
 
+from flask_caching import Cache
+
 from flask_restful import Api
 
 from sqlalchemy import create_engine
@@ -9,8 +11,11 @@ from sqlalchemy.orm import sessionmaker
 
 from swagger_settings import swagger_template
 
+
+
 app = Flask(__name__)
 api = Api(app)
+cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_KEY_PREFIX': 'flask_cache', 'CACHE_REDIS_URL': 'redis://127.0.0.1:6379'})
 
 
 
