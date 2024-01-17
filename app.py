@@ -148,7 +148,7 @@ def article_details_page(article_id):
 def your_profile_page():
     """
 
-    Функция для отображения профиля пользователя,
+    Функция для отрисовки профиля пользователя,
     используется шаблон forum/your_profile.html
 
     """
@@ -156,16 +156,17 @@ def your_profile_page():
 
         session = SessionFactory()
         current_user_id = current_user.id
-        cached_articles = cache.get(f'articles_{current_user_id}')
+
+        cache_key = f'articles_{current_user_id}'
+        cached_articles = cache.get(cache_key)
 
         if cached_articles is not None:
 
             your_articles = cached_articles
 
         else:
-
             your_articles = session.query(Article).filter_by(user_id=current_user_id).order_by(desc(Article.created_at)).all()
-            cache.set(f'articles_{current_user_id}', your_articles, timeout=600)
+            cache.set(cache_key, your_articles, timeout=600)
 
         return render_template('forum/your_profile.html', articles=your_articles)
 
