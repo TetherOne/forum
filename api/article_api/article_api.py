@@ -7,6 +7,7 @@ from models import Article
 from settings import SessionFactory
 
 
+
 class ArticleAllResource(Resource):
     """
 
