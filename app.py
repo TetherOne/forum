@@ -143,7 +143,7 @@ def article_details_page(article_id):
 
 
 
-@cache.cached(timeout=600, key_prefix='profile_page')
+# @cache.cached(timeout=600, key_prefix='profile_page')
 @app.route('/your_profile')
 def your_profile_page():
     """
@@ -166,7 +166,7 @@ def your_profile_page():
 
         else:
             your_articles = session.query(Article).filter_by(user_id=current_user_id).order_by(desc(Article.created_at)).all()
-            cache.set(cache_key, your_articles, timeout=600)
+            cache.set(cache_key, your_articles, timeout=30)
 
         return render_template('forum/your_profile.html', articles=your_articles)
 
@@ -288,6 +288,8 @@ def create_article_page():
 
         save_article_and_category(session, request, current_user)
 
+        cache.delete(f'articles_{current_user.id}')
+
     return render_template('forum/create_article.html')
 
 
@@ -303,6 +305,8 @@ def delete_article_page(id):
     session = SessionFactory()
 
     delete_article(session, id)
+
+    cache.delete(f'articles_{current_user.id}')
 
     return redirect(url_for('your_profile_page'))
 
@@ -322,6 +326,8 @@ def update_article_page(id):
     if request.method == 'POST':
 
         get_fields_and_update_article(session, request, article)
+
+        cache.delete(f'articles_{current_user.id}')
 
         return redirect(url_for('your_profile_page'))
 
