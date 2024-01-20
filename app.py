@@ -86,7 +86,6 @@ def page_not_found(error):
 
 
 
-
 @app.route('/', methods=['GET'])
 def main_page():
     """
