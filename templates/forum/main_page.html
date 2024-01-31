@@ -54,16 +54,13 @@
 
 {% for article in articles %}
     <div>Название статьи: {{ article.name_of_article }}</div>
-    <duv>Категория: {{ article.category }}</duv>
+    <div>Категория: {{ article.category }}</div>
     <div>Содержание: {{ article.text_of_article }}</div>
-    <button onclick="window.location.href='{{ url_for('user_profile_page') }}';" type="button" class="btn btn-outline-dark">Профиль пользователя</button>
+{#    <div>Автор: <a href="{{ url_for('your_profile_page', id=article.user.id) }}">{{ article.user.username }}</a></div>#}
     <div>Дата публикации: {{ article.created_at.strftime('%d %B, %Y, %H:%M') }}</div>
     <div>
-
-    <button onclick="window.location.href='{{ url_for('article_details_page', article_id=article.id) }}';" type="button" class="btn btn-outline-dark">Читать далее</button>
-
+        <button onclick="window.location.href='{{ url_for('article_details_page', article_id=article.id) }}';" type="button" class="btn btn-outline-dark">Читать далее</button>
     </div>
-
     <br>
 {% endfor %}
 

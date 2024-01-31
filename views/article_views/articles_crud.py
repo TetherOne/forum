@@ -1,5 +1,4 @@
 from flask import flash
-from models import Article
 
 from models import Article
 
@@ -20,15 +19,11 @@ def article_check_form_fields(request):
 
 
 
-
 def delete_article(session, id):
 
     article = session.query(Article).filter_by(id=id).first()
     session.delete(article)
     session.commit()
-
-
-
 
 
 

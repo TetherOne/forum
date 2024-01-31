@@ -1,8 +1,3 @@
-import os
-
-from flask_login import current_user
-
-from models import User
 from werkzeug.utils import secure_filename
 
 from flask_login import current_user
@@ -41,10 +36,6 @@ def delete_avatar(request, session):
 
 
 
-
-
-
-
 def upload_avatar(request, session):
 
     avatar_file = request.files.get('avatar')
@@ -68,4 +59,3 @@ def upload_avatar(request, session):
     else:
 
         return redirect(request.url)
-

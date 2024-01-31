@@ -1,11 +1,8 @@
-from sqlalchemy import or_, desc
+from models import Article
 
 from sqlalchemy import desc
-from sqlalchemy import desc
 
-from models import Article
-from models import Article
-from models import Article
+from sqlalchemy import or_
 
 
 
@@ -17,16 +14,11 @@ def upload_articles_by_search(session, search_query):
 
 
 
-
-
-
 def upload_articles_and_categories(session):
 
     articles = session.query(Article).order_by(desc(Article.created_at)).all()
 
     return articles
-
-
 
 
 

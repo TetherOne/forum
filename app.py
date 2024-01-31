@@ -1,7 +1,3 @@
-
-from views.article_views.articles_crud import save_article_and_category
-from views.article_views.articles_crud import article_check_form_fields
-
 from views.update_article.get_fields_and_update_article_view import get_fields_and_update_article
 
 from views.register_and_login_views.register_and_login import get_username_email_password
@@ -9,17 +5,20 @@ from views.register_and_login_views.register_and_login import get_username_passw
 from views.register_and_login_views.register_and_login import register_user
 from views.register_and_login_views.register_and_login import login
 
+from views.main_page_views.main_page_file import upload_articles_and_categories
+from views.main_page_views.main_page_file import upload_articles_by_category
+from views.main_page_views.main_page_file import upload_articles_by_search
+
+from views.article_views.articles_crud import save_article_and_category
+from views.article_views.articles_crud import article_check_form_fields
+
 from views.avatar_views.upload_and_delete import delete_avatar
 from views.avatar_views.upload_and_delete import upload_avatar
 
-from views.main_page_views.main_page_file import upload_articles_by_category
-from views.main_page_views.main_page_file import upload_articles_by_search
-from views.main_page_views.main_page_file import upload_articles_and_categories
-
-from views.article_views.articles_crud import delete_article
-
 from api.article_api.id_articles_api import ArticleIDResource
 from api.article_api.article_api import ArticleAllResource
+
+from views.article_views.articles_crud import delete_article
 
 from api.user_api.id_user_api import UserIDResource
 from api.user_api.user_api import UserAllResource

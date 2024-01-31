@@ -1,11 +1,10 @@
-
-from flask import flash
-from flask import flash, redirect, url_for
 from flask_login import login_user
 
-from models import User
-from models import User
+from flask import redirect
+from flask import url_for
+from flask import flash
 
+from models import User
 
 
 
@@ -28,10 +27,6 @@ def get_username_email_password(request):
 
 
 
-
-
-
-
 def login(session, username, password):
 
     user = session.query(User).filter_by(username=username, password=password).first()
@@ -41,7 +36,6 @@ def login(session, username, password):
         return redirect(url_for('login_page'))
 
     login_user(user)
-
 
 
 
