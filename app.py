@@ -1,21 +1,22 @@
-from views.create_and_check_article.save_article_and_category_view import save_article_and_category
-from views.create_and_check_article.check_form_fields_view import article_check_form_fields
+
+from views.article_views.articles_crud import save_article_and_category
+from views.article_views.articles_crud import article_check_form_fields
 
 from views.update_article.get_fields_and_update_article_view import get_fields_and_update_article
 
-from views.register_and_login.get_register_fields_view import get_username_email_password
-from views.register_and_login.get_login_fields_view import get_username_password
-from views.register_and_login.register_view import register_user
-from views.register_and_login.login_view import login
+from views.register_and_login_views.register_and_login import get_username_email_password
+from views.register_and_login_views.register_and_login import get_username_password
+from views.register_and_login_views.register_and_login import register_user
+from views.register_and_login_views.register_and_login import login
 
-from views.upload_and_delete_avatar.delete_avatar_view import delete_avatar
-from views.upload_and_delete_avatar.upload_avatar_view import upload_avatar
+from views.avatar_views.upload_and_delete import delete_avatar
+from views.avatar_views.upload_and_delete import upload_avatar
 
-from views.main_page.upload_articles_by_category_view import upload_articles_by_category
-from views.main_page.article_search_view import upload_articles_by_search
-from views.main_page.main_page_view import upload_articles_and_categories
+from views.main_page_views.main_page_file import upload_articles_by_category
+from views.main_page_views.main_page_file import upload_articles_by_search
+from views.main_page_views.main_page_file import upload_articles_and_categories
 
-from views.delete_article.delete_article_view import delete_article
+from views.article_views.articles_crud import delete_article
 
 from api.article_api.id_articles_api import ArticleIDResource
 from api.article_api.article_api import ArticleAllResource

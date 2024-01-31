@@ -1,4 +1,4 @@
-from views.models_view.utc_now_view import utcnow
+from views.model_views.utc_now_view import utcnow
 
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import mapped_column

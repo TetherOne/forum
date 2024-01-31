@@ -56,7 +56,7 @@
     <div>Название статьи: {{ article.name_of_article }}</div>
     <duv>Категория: {{ article.category }}</duv>
     <div>Содержание: {{ article.text_of_article }}</div>
-    <div>Автор: <a href="{{ url_for('your_profile_page', id=article.user.id) }}">{{ article.user.username }}</a></div>
+    <button onclick="window.location.href='{{ url_for('user_profile_page') }}';" type="button" class="btn btn-outline-dark">Профиль пользователя</button>
     <div>Дата публикации: {{ article.created_at.strftime('%d %B, %Y, %H:%M') }}</div>
     <div>
 
