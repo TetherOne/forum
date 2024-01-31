@@ -7,11 +7,7 @@ from models import User
 
 
 def delete_avatar(request, session):
-    """
 
-    Функция для удаления аватарки
-
-    """
     current_user_obj = current_user
 
     if current_user_obj.avatar:

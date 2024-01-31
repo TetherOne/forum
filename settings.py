@@ -1,15 +1,16 @@
-from flasgger import Swagger
-from flask import Flask
+from swagger_settings import swagger_template
+
+from sqlalchemy.orm import sessionmaker
+
+from sqlalchemy import create_engine
 
 from flask_caching import Cache
 
 from flask_restful import Api
 
-from sqlalchemy import create_engine
+from flasgger import Swagger
 
-from sqlalchemy.orm import sessionmaker
-
-from swagger_settings import swagger_template
+from flask import Flask
 
 
 
@@ -28,7 +29,9 @@ swagger_config = {
 }
 
 
+
 Swagger(app, template=swagger_template)
+
 
 
 engine = create_engine('postgresql://postgres:qwerty@localhost:5432/forum')

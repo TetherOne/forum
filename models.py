@@ -1,20 +1,21 @@
-import datetime
+from views.models_view.utc_now_view import utcnow
+
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Mapped
+
+from flask_login import UserMixin
+
+from sqlalchemy import ForeignKey
+from sqlalchemy import DateTime
+from sqlalchemy import String
+from sqlalchemy import Column
 
 from typing import Annotated
 from typing import Optional
 
-from flask_login import UserMixin
-
-from sqlalchemy import ForeignKey, String
-from sqlalchemy import Column
-from sqlalchemy import DateTime
-
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-
-from views.models_view.utc_now_view import utcnow
+import datetime
 
 
 
@@ -23,31 +24,14 @@ int_pk = Annotated[int, mapped_column(primary_key=True)]
 
 
 class Base(DeclarativeBase):
-    """
 
-    Родительский класс,
-    имеет атрибуты id (primary_key=True),
-    created_at (default=utcnow)
-
-    """
     id: Mapped[int_pk]
     created_at: Mapped[datetime] = Column(DateTime, default=utcnow)
 
 
 
 class User(Base, UserMixin):
-    """
 
-    Модель пользователя:
-
-    id: int, primary_ky=True
-    username: str
-    email: str
-    password: str
-    created_at: datetime, utcnow=True
-    avatar: str
-
-    """
     __tablename__ = 'users'
 
 
@@ -65,17 +49,7 @@ class User(Base, UserMixin):
 
 
 class Article(Base):
-    """
 
-    Модель статьи:
-
-    id: int, primary_key=Tru
-    name_of_article: str
-    text_of_article: str
-    user_id: int, Foreignkey ('users.id')
-    created_at: datetime, utcnow=True
-
-    """
     __tablename__ = 'articles'
 
 

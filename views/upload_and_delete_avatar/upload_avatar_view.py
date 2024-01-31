@@ -1,22 +1,20 @@
-import os
+from werkzeug.utils import secure_filename
 
-from flask import flash, redirect
 from flask_login import current_user
 
 from sqlalchemy import update
 
-from werkzeug.utils import secure_filename
-
+from flask import redirect
 
 from models import User
 
+import os
+
+
+
 
 def upload_avatar(request, session):
-    """
 
-    Функция для загрузки аватарки
-
-    """
     avatar_file = request.files.get('avatar')
 
     if avatar_file:

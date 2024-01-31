@@ -5,11 +5,7 @@ from models import Article
 
 
 def save_article_and_category(session, request, current_user):
-    """
 
-    Функция сохраняет статью и ее категорию в базе данных
-
-    """
     name_of_article = request.form.get('name_of_article')
     text_of_article = request.form.get('text_of_article')
     category = request.form.get('category')
