@@ -34,12 +34,10 @@ class User(Base, UserMixin):
 
     __tablename__ = 'users'
 
-
     username: Mapped[str]
     avatar: Mapped[Optional[str]] = Column(String)
     email: Mapped[str]
     password: Mapped[str]
-
 
     articles: Mapped[list['Article']] = relationship(
         back_populates='user',
@@ -51,7 +49,6 @@ class User(Base, UserMixin):
 class Article(Base):
 
     __tablename__ = 'articles'
-
 
     name_of_article: Mapped[str]
     category: Mapped[str]
